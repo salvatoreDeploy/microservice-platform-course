@@ -21,9 +21,7 @@ export class AuthorizationGuard implements CanActivate {
   }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    /* 
-
-    Implementação com Rest:
+    /* Implementação com Rest:
     
     const httpContext = context.switchToHttp();
 

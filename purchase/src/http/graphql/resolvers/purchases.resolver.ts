@@ -7,7 +7,7 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
-import { CurrentUser } from 'src/http/authorization/current-user';
+import { AuthUser, CurrentUser } from 'src/http/authorization/current-user';
 import { CustomerService } from 'src/services/customer.service';
 import { ProductService } from 'src/services/product.service';
 import { PurchaseService } from 'src/services/purchase.service';
@@ -39,15 +39,15 @@ export class PurchasesResolver {
   @UseGuards(AuthorizationGuard)
   async createPurchase(
     @Args('data') data: CreatePurchaseInput,
-    @CurrentUser() AuthUser,
+    @CurrentUser() user: AuthUser,
   ) {
     let customer = await this.customerService.findCustomerByAuthUserId(
-      AuthUser.sub,
+      user.sub,
     );
 
     if (!customer) {
       customer = await this.customerService.createCostumerId({
-        authUserId: AuthUser.sub,
+        authUserId: user.sub,
       });
     }
 

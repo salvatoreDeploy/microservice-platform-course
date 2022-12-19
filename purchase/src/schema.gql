@@ -8,8 +8,23 @@ type Product {
   slug: String!
 }
 
+type Purchase {
+  id: ID!
+  status: PurchaseStatus!
+  createdAt: String!
+  product: Product!
+}
+
+"""Available purcahse statuses"""
+enum PurchaseStatus {
+  PENDING
+  APPROVED
+  FAILED
+}
+
 type Query {
   products: [Product!]!
+  purchases: [Purchase!]!
 }
 
 type Mutation {

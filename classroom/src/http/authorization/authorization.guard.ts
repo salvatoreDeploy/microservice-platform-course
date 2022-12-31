@@ -21,7 +21,9 @@ export class AuthorizationGuard implements CanActivate {
   }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    /* Implementação com Rest:
+    /* 
+
+    Implementação com Rest:
     
     const httpContext = context.switchToHttp();
 
@@ -48,7 +50,6 @@ export class AuthorizationGuard implements CanActivate {
 
     try {
       await checkJWT(req, res);
-
       return true;
     } catch (err) {
       throw new UnauthorizedException(err);

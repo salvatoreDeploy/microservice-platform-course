@@ -28,6 +28,8 @@ scalar DateTime
 
 type Query {
   courses: [Course!]!
+  course(id: String!): Course!
+  meCourses(id: String!): [Course!]!
   enrollments: [Enrollment!]!
   students: [Student!]!
   me: Student!

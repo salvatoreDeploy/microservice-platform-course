@@ -42,11 +42,28 @@ export class PurchaseService {
       throw new Error('Product not exists');
     }
 
-    await this.prisma.purchase.create({
+    const purchase = await this.prisma.purchase.create({
       data: {
         customerId,
         productId,
       },
     });
+
+    const customer = await this.prisma.customer.findUnique({
+      where: { id: customerId },
+    });
+
+    this.kafka.emit('purchases.new-purchase', {
+      customer: {
+        authUserId: customer.authUserId,
+      },
+      product: {
+        id: productExists.id,
+        title: productExists.title,
+        slug: productExists.slug,
+      },
+    });
+
+    return purchase;
   }
 }
